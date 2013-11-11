@@ -14,8 +14,11 @@ end
 
 
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
-  assert page.body =~ /#{e1}.*#{e2}/m, "#{e1} was not before #{e2}"
+  #  ensure that that e1 occurs before e2.
+  #  page.body is the entire content of the page as a string.
+  page.body.should match /#{e1}.*#{e2}/m
 end
+
 
 
 # Make it easier to express checking or unchecking several boxes at once
@@ -34,24 +37,15 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
 end
 
 
-Then /I should see all of the movies/ do
-  movies = Movie.all
-  
-  if movies.size == 10
-    movies.each do |movie|
-      assert page.body =~ /#{movie.title}/m, "#{movie.title} did not appear"
-    end
-  else
-    false
-  end
+Then /I should see all the movies/ do
+  # Make sure that all the movies in the app are visible in the table
+  page.all('table#movies tbody tr').count.should == Movie.all.length
 end
 
 
+
 Then /I should not see any movies/ do
-  movies = Movie.all
-  movies.each do |movie|
-    assert true unless page.body =~ /#{movie.title}/m
-  end
+  page.all('table#movies tbody tr').count.should == 0
 end
 
 

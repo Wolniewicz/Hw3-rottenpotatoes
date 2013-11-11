@@ -22,14 +22,17 @@ Background: movies have been added to database
   And I am on the RottenPotatoes home page
 
 Scenario: sort movies alphabetically
-  When I follow "Movie Title"
-  And I press "Refresh"
-  Then I should see "Aladdin" before "Amelie"
+	
+	#follow is click link in web_steps, press refresh, assert order
+  	When I follow "Movie Title"
+  	And I press "Refresh"
+  	Then I should see "Aladdin" before "Amelie"
 
 
 Scenario: sort movies in increasing order of release date
-  When I follow "Release Date"
-  And I press "Refresh"
-  Then I should see "1968-04-06" before "1984-10-26"
+	#follow is click link in web_steps, press refresh, assert order
+  	When I follow "Release Date"
+  	And I press "Refresh"
+  	Then I should see "1968-04-06" before "1989-07-21"
 
 
